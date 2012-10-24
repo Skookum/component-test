@@ -1,6 +1,15 @@
 var path = require('path');
 
+var GitHub = require('github');
+var OAuth2 = require('oauth').OAuth2;
+
 var UserModel = require('./userModel');
+
+var clientId = '61c7ecbd017890538042';
+var secret = '6c701e76797d323b4f8d2ee7e9c0be17cd2d08a4';
+
+var oauth = new OAuth2(clientId, secret, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
+var github = new GitHub({ version: '3.0.0' });
 
 module.exports = function(app) {
 
@@ -21,6 +30,25 @@ module.exports = function(app) {
       return res.redirect('/dashboard');
     }
     return res.render(path.join(__dirname, 'signin'));
+  });
+
+  app.get('/oauth/github', function githubOAuth(req, res, next) {
+    oauth.getOAuthAccessToken(req.param('code'), {}, onTokenReceived);
+    function onTokenReceived(err, token) {
+      if (err) return next(err);
+      github.authenticate({
+        type: 'oauth',
+        token: token
+      });
+      console.log("Logged in with token:", token);
+      github.user.get({}, function onUserGet(err, user) {
+        console.log("USER:", user);
+        req.session.user = {
+          email: user.email
+        };
+        return res.redirect('/');
+      });
+    }
   });
 
   app.post('/signin', function(req, res) {
