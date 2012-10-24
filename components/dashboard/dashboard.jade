@@ -12,9 +12,10 @@ block content
         li!= user.name || user.email
         li: a(href='/signout') Sign out
 
-  .github-info
-    img(src=user.github.avatar_url, width='128', height='128')
-    pre= JSON.stringify(user.github, undefined, '  ')
-    each org in user.orgs
-      li
-        a(href=org.url)= org.login
+  if (user.github)
+    .github-info
+      img(src=user.github.avatar_url, width='128', height='128')
+      pre= JSON.stringify(user.github, undefined, '  ')
+      each org in user.orgs
+        li
+          a(href=org.url)= org.login

@@ -5,7 +5,7 @@ var UserModel = require('../userModel');
 describe('User model', function() {
   describe('authenticate()', function() {
     it('should reject a request without an email', function(done) {
-      UserModel.authenticate({ password: 'bacon' }, onAuth);
+      UserModel.authEmail({ password: 'bacon' }, onAuth);
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
@@ -14,7 +14,7 @@ describe('User model', function() {
       }
     });
     it('should reject a request without a password', function(done) {
-      UserModel.authenticate({ email: 'test@dummy.com' }, onAuth);
+      UserModel.authEmail({ email: 'test@dummy.com' }, onAuth);
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
@@ -23,7 +23,7 @@ describe('User model', function() {
       }
     });
     it('should reject a request with the wrong password', function(done) {
-      UserModel.authenticate({ email: 'test@dummy.com', password: 'wrong' }, onAuth);
+      UserModel.authEmail({ email: 'test@dummy.com', password: 'wrong' }, onAuth);
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
@@ -32,7 +32,7 @@ describe('User model', function() {
       }
     });
     it('should reject a request with a non-registered email', function(done) {
-      UserModel.authenticate({ email: 'doesnt@exist.com', password: 'bacon' }, onAuth);
+      UserModel.authEmail({ email: 'doesnt@exist.com', password: 'bacon' }, onAuth);
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
@@ -41,7 +41,7 @@ describe('User model', function() {
       }
     });
     it('should accept a valid email/password', function(done) {
-      UserModel.authenticate({ email: 'test@dummy.com', password: 'bacon' }, onAuth);
+      UserModel.authEmail({ email: 'test@dummy.com', password: 'bacon' }, onAuth);
       function onAuth(err, user) {
         should.not.exist(err);
         should.exist(user);
