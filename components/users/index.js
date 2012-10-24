@@ -1,8 +1,8 @@
 var path = require('path');
 
-var UserModel = require('./userModel');
+module.exports = function(app, config) {
 
-module.exports = function(app) {
+  var UserModel = require('./userModel')(app, config);
 
   app.user = {
     loggedIn: function(req, res, next) {
@@ -27,7 +27,6 @@ module.exports = function(app) {
     UserModel.authGitHub(req.param('code'), function(err, user) {
       if (err) return next(err);
       req.session.user = user;
-      console.log("Logged in user:", req.session.user);
       return res.redirect('/');
     });
   });

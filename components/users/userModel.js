@@ -8,43 +8,45 @@ var users = {
   'test@dummy.com': 'bacon'
 };
 
-var oauth = new OAuth2(clientId, secret, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
-var github = new GitHub({ version: '3.0.0' });
+module.exports = function(app, config) {
+  var oauth = new OAuth2(config.github_client, config.github_secret, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
+  var github = new GitHub({ version: '3.0.0' });
 
-module.exports = {
-  authEmail: function(creds, done) {
-    if (!(creds.email && creds.password)) {
-      return done(new Error('Email and pass required'));
-    }
-    var password = users[creds.email];
-    if (!password) {
-      return done(new Error('No such user'));
-    }
-    if (password === creds.password) {
-      return done(undefined, {
-        email: creds.email
-      });
-    }
-    return done(new Error('Invalid password'));
-  },
-  authGitHub: function(code, done) {
-    oauth.getOAuthAccessToken(code, {}, onTokenReceived);
-    function onTokenReceived(err, token) {
-      if (err) return done(err);
-      github.authenticate({
-        type: 'oauth',
-        token: token
-      });
-      var user = {};
-      github.user.get({}, function onUserGet(err, info) {
-        user.name = info.name || info.login;
-        user.email = info.email;
-        user.github = info;
-        github.user.getOrgs({}, function onOrgsGet(err, orgs) {
-          user.orgs = orgs;
-          return done(undefined, user);
+  return {
+    authEmail: function(creds, done) {
+      if (!(creds.email && creds.password)) {
+        return done(new Error('Email and pass required'));
+      }
+      var password = users[creds.email];
+      if (!password) {
+        return done(new Error('No such user'));
+      }
+      if (password === creds.password) {
+        return done(undefined, {
+          email: creds.email
         });
-      });
+      }
+      return done(new Error('Invalid password'));
+    },
+    authGitHub: function(code, done) {
+      oauth.getOAuthAccessToken(code, {}, onTokenReceived);
+      function onTokenReceived(err, token) {
+        if (err) return done(err);
+        github.authenticate({
+          type: 'oauth',
+          token: token
+        });
+        var user = {};
+        github.user.get({}, function onUserGet(err, info) {
+          user.name = info.name || info.login;
+          user.email = info.email;
+          user.github = info;
+          github.user.getOrgs({}, function onOrgsGet(err, orgs) {
+            user.orgs = orgs;
+            return done(undefined, user);
+          });
+        });
+      }
     }
-  }
+  };
 };

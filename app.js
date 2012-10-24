@@ -22,10 +22,11 @@ module.exports = main;
 
 function main(config) {
   var app = express();
+  app.locals.config = config;
 
   flash(app);
   middleware(app, config);
-  users(app);
+  users(app, config);
   dashboard(app);
 
   return app;

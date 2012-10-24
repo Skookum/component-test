@@ -14,4 +14,4 @@ block content
       button.button-submit(type='submit') Sign in
 
   .box-note
-    a(href='https://github.com/login/oauth/authorize?client_id=61c7ecbd017890538042&scope=public_repo,repo,repo:status') Sign in with github instead.
+    a(href='https://github.com/login/oauth/authorize?client_id=' + config.github_client + '&scope=public_repo,repo,repo:status') Sign in with github instead.

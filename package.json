@@ -28,6 +28,8 @@
     "stylus_compress": true,
     "stylus_debug": true,
     "stylus_force": false,
-    "test": false
+    "test": false,
+    "github_client": "61c7ecbd017890538042",
+    "github_secret": "6c701e76797d323b4f8d2ee7e9c0be17cd2d08a4"
   }
 }
