@@ -1,15 +1,6 @@
 var path = require('path');
 
-var GitHub = require('github');
-var OAuth2 = require('oauth').OAuth2;
-
 var UserModel = require('./userModel');
-
-var clientId = '61c7ecbd017890538042';
-var secret = '6c701e76797d323b4f8d2ee7e9c0be17cd2d08a4';
-
-var oauth = new OAuth2(clientId, secret, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
-var github = new GitHub({ version: '3.0.0' });
 
 module.exports = function(app) {
 
@@ -33,30 +24,20 @@ module.exports = function(app) {
   });
 
   app.get('/oauth/github', function githubOAuth(req, res, next) {
-    oauth.getOAuthAccessToken(req.param('code'), {}, onTokenReceived);
-    function onTokenReceived(err, token) {
+    UserModel.authGitHub(req.param('code'), function(err, user) {
       if (err) return next(err);
-      github.authenticate({
-        type: 'oauth',
-        token: token
-      });
-      console.log("Logged in with token:", token);
-      github.user.get({}, function onUserGet(err, user) {
-        console.log("USER:", user);
-        req.session.user = {
-          email: user.email
-        };
-        return res.redirect('/');
-      });
-    }
+      req.session.user = user;
+      console.log("Logged in user:", req.session.user);
+      return res.redirect('/');
+    });
   });
 
-  app.post('/signin', function(req, res) {
+  app.post('/signin', function checkSignin(req, res) {
     var creds = {
       email: req.body.email,
       password: req.body.password
     };
-    UserModel.authenticate(creds, function(err, user) {
+    UserModel.authEmail(creds, function(err, user) {
       if (user) {
         req.session.user = user;
         return res.redirect('/dashboard');
@@ -69,10 +50,10 @@ module.exports = function(app) {
   });
 
   app.all('/signout',
-    function(req, res, next) {
+    function destroySession(req, res, next) {
       req.session.regenerate(next);
     },
-    function(req, res, next) {
+    function redirect(req, res, next) {
       req.flash("You have been signed out.");
       return res.redirect('/');
     }
