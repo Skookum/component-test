@@ -2,13 +2,16 @@ var express = require('express');
 var path = require('path');
 var balance = require('./lib/balance');
 
-// Require our components
+// Require our modules
 
 var balance = require('./lib/balance');
 var middleware = require('./lib/middleware');
-var users = require('./lib/users');
-var dashboard = require('./lib/dashboard');
 var flash = require('./lib/flash');
+
+// Require our components
+
+var users = require('./components/users');
+var dashboard = require('./components/dashboard');
 
 // Expose the app
 
