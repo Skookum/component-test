@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = function(app, config) {
 
-  var UserModel = require('./userModel')(app, config);
+  var UserModel = require('./userModel')(config);
 
   app.user = {
     loggedIn: function(req, res, next) {

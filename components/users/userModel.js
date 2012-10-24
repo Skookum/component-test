@@ -8,7 +8,7 @@ var users = {
   'test@dummy.com': 'bacon'
 };
 
-module.exports = function(app, config) {
+module.exports = function(config) {
   var oauth = new OAuth2(config.github_client, config.github_secret, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
   var github = new GitHub({ version: '3.0.0' });
 

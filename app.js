@@ -22,7 +22,7 @@ module.exports = main;
 
 function main(config) {
   var app = express();
-  app.locals.config = config;
+  app.config = app.locals.config = config;
 
   flash(app);
   middleware(app, config);

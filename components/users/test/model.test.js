@@ -1,6 +1,7 @@
 var should = require('should');
 
-var UserModel = require('../userModel');
+var config = {};
+var UserModel = require('../userModel')(config);
 
 describe('User model', function() {
   describe('authenticate()', function() {
