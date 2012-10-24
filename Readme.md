@@ -4,12 +4,12 @@ A simple app with sign-in and dashboard views.
 
 ## Concepts
 
-- **App-specific features are [components](component-test/tree/master/components)**
-- **Everything that could be made into an npm module is in [lib](component-test/tree/master/lib)**
-- **Shared code lives in [shared](component-test/tree/master/shared)**
-- **Pyramid testing** (view integrations live in [shared/test](component-test/tree/master/shared/test), model and controller tests live in [components/{component}/test](component-test/tree/master/components/users/test))
-- **[Makefile](component-test/tree/master/Makefile) as entry point** (everything starts with `make`)
-- **Separate code and [config](component-test/tree/master/package.json)** (`config` [is injected](component-test/tree/master/app.js#L20) into `main()`) ...and other 12-factor guidelines
+- **App-specific features are [components](/Skookum/component-test/tree/master/components)**
+- **Everything that could be made into an npm module is in [lib](/Skookum/component-test/tree/master/lib)**
+- **Shared code lives in [shared](/Skookum/component-test/tree/master/shared)**
+- **Pyramid testing** (view integrations live in [shared/test](/Skookum/component-test/tree/master/shared/test), model and controller tests live in [components/{component}/test](/Skookum/component-test/tree/master/components/users/test))
+- **[Makefile](/Skookum/component-test/tree/master/Makefile) as entry point** (everything starts with `make`)
+- **Separate code and [config](/Skookum/component-test/tree/master/package.json)** (`config` [is injected](/Skookum/component-test/tree/master/app.js#L20) into `main()`) ...and other 12-factor guidelines
 
 ## Try it
 
