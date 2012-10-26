@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var balance = require('./lib/balance');
 
 // Require our modules
 
