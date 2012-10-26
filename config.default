@@ -13,3 +13,8 @@ export github_secret=6c701e76797d323b4f8d2ee7e9c0be17cd2d08a4
 export session_host=localhost
 export session_port=6379
 export session_pass=
+
+if [ -f "config.local" ]
+then
+  source "config.local"
+fi
