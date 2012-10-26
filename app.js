@@ -33,7 +33,7 @@ function main(config) {
 // Start listening if the app has been started directly
 
 if (module === require.main) {
-  var config = require('./config.json');
+  var config = process.env;
   var app = main(config);
   app.listen(config.http_port);
   console.log("Listening on", config.http_port);

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export http_port=3000
+export request_timeout=10000
+export session_secret=bp2secret
+export log_requests=
+export stylus_compress=1
+export stylus_debug=1
+export stylus_force=1
+export test=
+export github_client=61c7ecbd017890538042
+export github_secret=6c701e76797d323b4f8d2ee7e9c0be17cd2d08a4
+export session_host=localhost
+export session_port=6379
+export session_db=components_session
+export session_pass=

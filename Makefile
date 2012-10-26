@@ -5,13 +5,13 @@ setup:
 
 test:
 	npm install
-	scripts/test
+	source "config.test" && scripts/test
 
 test-quick:
-	scripts/test
+	source "config.test" && scripts/test
 
 start:
-	npm start
+	source "config.default" && npm start
 
 open:
 	(sleep 2 && open http://localhost:3000) &

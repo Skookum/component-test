@@ -17,6 +17,7 @@ module.exports = function(app, config) {
   };
 
   app.get('/', function signIn(req, res) {
+    console.log('wtf');
     if (req.session.user) {
       return res.redirect('/dashboard');
     }
