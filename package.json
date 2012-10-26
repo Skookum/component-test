@@ -18,7 +18,7 @@
     "superagent": "git://github.com/hunterloftis/superagent.git"
   },
   "scripts": {
-    "start": "node app"
+    "start": "node server"
   },
   "publicConfig": {
     "http_port": 3000,
