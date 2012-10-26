@@ -36,7 +36,7 @@ function main(config) {
 
 if (module === require.main) {
   balance(function() {
-    var config = require('./package.json').publicConfig;
+    var config = require('./config.json');
     var app = main(config);
     app.listen(config.http_port);
     console.log("Listening on", config.http_port);

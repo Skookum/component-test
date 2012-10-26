@@ -1,6 +1,6 @@
 {
   "name": "node-components-test",
-  "version": "0.0.1-2",
+  "version": "0.0.1-4",
   "author": "Hunter Loftis <hunter@hunterloftis.com>",
   "subdomain": "components",
   "engines": {
@@ -22,18 +22,6 @@
     "superagent": "git://github.com/hunterloftis/superagent.git"
   },
   "scripts": {
-    "start": "node app"
-  },
-  "publicConfig": {
-    "http_port": 3000,
-    "request_timeout": 10000,
-    "session_secret": "bp2secret",
-    "log_requests": false,
-    "stylus_compress": true,
-    "stylus_debug": true,
-    "stylus_force": false,
-    "test": false,
-    "github_client": "61c7ecbd017890538042",
-    "github_secret": "6c701e76797d323b4f8d2ee7e9c0be17cd2d08a4"
+    "start": "node server.js"
   }
 }
