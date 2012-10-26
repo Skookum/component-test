@@ -17,7 +17,7 @@ A simple app with sign-in and dashboard views.
 $ git clone git://github.com/Skookum/component-test.git
 $ cd component-test
 $ make setup
-$ make test-quick
+$ make test
 $ make open
 ```
 

@@ -10,6 +10,7 @@ var flash = require('./lib/flash');
 
 var users = require('./components/users');
 var dashboard = require('./components/dashboard');
+var notFound = require('./components/notFound');
 
 // Expose the app
 
@@ -26,6 +27,7 @@ function main(config) {
   middleware(app, config);
   users(app, config);
   dashboard(app);
+  notFound(app);
 
   return app;
 }
