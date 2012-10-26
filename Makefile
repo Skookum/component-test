@@ -4,10 +4,6 @@ setup:
 	npm install
 
 test:
-	npm install
-	source "config.test" && scripts/test
-
-test-quick:
 	source "config.test" && scripts/test
 
 start:
