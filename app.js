@@ -4,7 +4,6 @@ var balance = require('./lib/balance');
 
 // Require our modules
 
-var balance = require('./lib/balance');
 var middleware = require('./lib/middleware');
 var flash = require('./lib/flash');
 
@@ -35,10 +34,8 @@ function main(config) {
 // Start listening if the app has been started directly
 
 if (module === require.main) {
-  balance(function() {
-    var config = require('./config.json');
-    var app = main(config);
-    app.listen(config.http_port);
-    console.log("Listening on", config.http_port);
-  });
+  var config = require('./config.json');
+  var app = main(config);
+  app.listen(config.http_port);
+  console.log("Listening on", config.http_port);
 }

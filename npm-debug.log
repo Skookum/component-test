@@ -1,0 +1,29 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
+2 info using npm@1.1.62
+3 info using node@v0.8.11
+4 verbose read json /Users/hunter/work/boilerplate2/package.json
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart components@0.0.1-12
+7 info start components@0.0.1-12
+8 verbose unsafe-perm in lifecycle true
+9 silly exec sh "-c" "server.js"
+10 silly sh,-c,server.js,/Users/hunter/work/boilerplate2 spawning
+11 info components@0.0.1-12 Failed to exec start script
+12 error components@0.0.1-12 start: `server.js`
+12 error `sh "-c" "server.js"` failed with 127
+13 error Failed at the components@0.0.1-12 start script.
+13 error This is most likely a problem with the components package,
+13 error not with npm itself.
+13 error Tell the author that this fails on your system:
+13 error     server.js
+13 error You can get their info via:
+13 error     npm owner ls components
+13 error There is likely additional logging output above.
+14 error System Darwin 11.4.0
+15 error command "/usr/local/bin/node" "/usr/local/bin/npm" "start"
+16 error cwd /Users/hunter/work/boilerplate2
+17 error node -v v0.8.11
+18 error npm -v 1.1.62
+19 error code ELIFECYCLE
+20 verbose exit [ 1, true ]
