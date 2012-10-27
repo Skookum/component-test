@@ -14,7 +14,8 @@
     "stylus": "*",
     "github": "*",
     "oauth": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "bcrypt": "*"
   },
   "devDependenciesDisabled": {
     "mocha": "*",

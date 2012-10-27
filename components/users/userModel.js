@@ -1,11 +1,13 @@
 var mongoose = require('mongoose');
 var GitHub = require('github');
 var OAuth2 = require('oauth').OAuth2;
+var bcrypt = require('bcrypt');
 
-var users = {
-  'hunter@hunterloftis.com': 'password',
-  'test@dummy.com': 'bacon'
-};
+// Constants
+
+var MIN_PASSWORD_LENGTH = 8;
+
+// Exports
 
 module.exports = function(config) {
 
@@ -14,8 +16,9 @@ module.exports = function(config) {
 
   var schema = mongoose.Schema({
     email:        { type: String },
-    name:         { type: String },
-    githubLogin:  { type: String }
+    password:     { type: String, set: encrypt },
+    githubLogin:  { type: String },
+    name:         { type: String }
   });
 
   schema.statics.create = create;
@@ -25,23 +28,45 @@ module.exports = function(config) {
   var User = mongoose.model('User', schema);
   return User;
 
+  // Setters
+
+  function encrypt(plain) {
+    if (!plain || plain.length < MIN_PASSWORD_LENGTH) return undefined;
+    var salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(plain, salt);
+  }
+
   // Statics
 
   function create(props, done) {
-    if (!(props.email || props.githubLogin)) return done(new Error('Either email or github login is required'));
-    var newUser = new User(props);
-    newUser.save(done);
+    var filter;
+
+    if (props.email && props.password) filter = { email: props.email };
+    else if (props.githubLogin) filter = { githubLogin: props.githubLogin };
+    else return done(new Error('Either email or github login is required'));
+    User.findOne(filter, onMatch);
+
+    function onMatch(err, match) {
+      if (!err && match) return done(new Error('User already exists'));
+      console.log("Creating new user with props:", props);
+      var newUser = new User(props);
+      newUser.save(done);
+    }
   }
 
   function authEmail(creds, done) {
     if (!(creds.email && creds.password)) {
       return done(new Error('Email and password required'));
     }
-    User.findOne({ email: creds.email, password: creds.password }, function(err, match) {
+    var encrypted = encrypt(creds.password);
+    User.findOne({ email: creds.email }, onMatch);
+
+    function onMatch(err, match) {
       if (err) return done(new Error("Database error"));
-      if (match) return done(undefined, match);
+      var passMatch = match && match.password && bcrypt.compareSync(creds.password, match.password);
+      if (match && passMatch) return done(undefined, match);
       return done(new Error("Username or password not found"));
-    });
+    }
   }
 
   function authGitHub(code, done) {

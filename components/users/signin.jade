@@ -9,9 +9,11 @@ block content
       h1 Who are you?
     input.input-text(type='text', name='email')
     input.input-text(type='password', name='password')
-    p.micro test@dummy.com:bacon
     .button-bar
       button.button-submit(type='submit') Sign in
+
+  .box-note
+    a(href='/signup') Create a new account
 
   .box-note
     a(href='https://github.com/login/oauth/authorize?client_id=' + config.github_client + '&scope=public_repo,repo,repo:status') Sign in with github instead.
