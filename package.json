@@ -1,6 +1,6 @@
 {
   "name": "components",
-  "version": "0.0.2",
+  "version": "0.0.2-2",
   "author": "Hunter Loftis <hunter@hunterloftis.com>",
   "subdomain": "components",
   "engines": {
@@ -16,7 +16,7 @@
     "oauth": "*",
     "mongoose": "*"
   },
-  "devDependencies": {
+  "devDependenciesDisabled": {
     "mocha": "*",
     "should": "*",
     "zombie": "1.3.1",
