@@ -24,6 +24,25 @@ describe('Browser', function() {
         return done();
       });
     });
+    it('should be able to view the signup page', function(done) {
+      browser.visit('http://localhost:3002/signup', function() {
+        assert.ok(browser.success);
+        browser.text('title').should.include('Sign up');
+        return done();
+      });
+    });
+    it('should be able to create a user', function(done) {
+      browser
+        .fill('email', 'test@dummy.com')
+        .fill('password', 'bacon')
+        .pressButton('create')
+        .then(function() {
+          assert.ok(browser.success);
+          browser.text('title').should.include('Dashboard');
+          browser.text('.flash-messages').should.include('Welcome');
+          return done();
+        });
+    });
   });
   describe('of a registered user', function() {
     var browser = new Zombie();

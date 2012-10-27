@@ -41,7 +41,10 @@ module.exports = function(app, config) {
     function onCreate(err, newUser) {
       console.log('err:', err);
       if (err) req.flash('Sorry, we were unable to create that account.');
-      else req.session.user = newUser;
+      else {
+        req.session.user = newUser;
+        req.flash('Welcome to this app!');
+      }
       return res.redirect('/');
     }
   }
