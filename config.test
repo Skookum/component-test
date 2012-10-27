@@ -10,3 +10,4 @@ fi
 export http_port=3000
 export stylus_debug=1
 export test=1
+export mongoose_url=mongodb://localhost/components_test

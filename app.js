@@ -5,6 +5,7 @@ var path = require('path');
 
 var middleware = require('./lib/middleware');
 var flash = require('./lib/flash');
+var mongoose = require('./lib/mongoose');
 
 // Require our components
 
@@ -23,6 +24,7 @@ function main(config) {
   var app = express();
   app.locals.config = config;
 
+  mongoose(app, config);
   flash(app);
   middleware(app, config);
   users(app, config);

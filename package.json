@@ -13,7 +13,8 @@
     "jade": "*",
     "stylus": "*",
     "github": "*",
-    "oauth": "*"
+    "oauth": "*",
+    "mongoose": "*"
   },
   "devDependencies": {
     "mocha": "*",

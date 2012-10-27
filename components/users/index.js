@@ -24,6 +24,7 @@ module.exports = function(app, config) {
   });
 
   app.get('/oauth/github', function githubOAuth(req, res, next) {
+    console.log('oauth returned from github');
     UserModel.authGitHub(req.param('code'), function(err, user) {
       if (err) return next(err);
       req.session.user = user;
