@@ -1,13 +1,13 @@
 extends ../../shared/views/layout
 
 block title
-  | Sign in - Components test
+  | Sign up - Components test
 
 block content
   form.form-gateway(action='/signup', method='post')
     .title-bar
       h1 New account
-    input.input-text(type='text', name='email')
-    input.input-text(type='password', name='password')
+    input.input-text(type='text', name='email', autocomplete='off')
+    input.input-text(type='password', name='password', autocomplete='off')
     .button-bar
       button.button-submit(type='submit') Create
