@@ -8,13 +8,12 @@ utils.clearRequireCache();
 
 var app = utils.startApp(3000);
 
-describe('Assumptions:', function() {
-  it('should have an empty users collection', function(done) {
-    app.users.model.remove(done);
-  });
-});
-
 describe('User controller', function() {
+  describe('Assumptions:', function() {
+    it('should have an empty users collection', function(done) {
+      app.users.model.remove(done);
+    });
+  });
   describe('/signup', function() {
     describe('with insufficient data', function() {
       it('should be rejected', function(done) {

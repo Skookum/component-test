@@ -6,13 +6,12 @@ var utils = require('./test.utils');
 
 var app = utils.startApp(3002);
 
-describe('Assumptions:', function() {
-  it('should have an empty users collection', function(done) {
-    app.users.model.remove(done);
-  });
-});
-
 describe('Browser', function() {
+  describe('Assumptions:', function() {
+    it('should have an empty users collection', function(done) {
+      app.users.model.remove(done);
+    });
+  });
   describe('of an unregistered user', function() {
     var browser = new Zombie();
     it('should be able to view the landing page', function(done) {
