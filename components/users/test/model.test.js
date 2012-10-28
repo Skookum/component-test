@@ -10,7 +10,7 @@ describe('User model', function() {
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
-        err.message.should.equal('Email and pass required');
+        err.message.should.equal('Email and password required');
         return done();
       }
     });
@@ -19,7 +19,7 @@ describe('User model', function() {
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
-        err.message.should.equal('Email and pass required');
+        err.message.should.equal('Email and password required');
         return done();
       }
     });
@@ -28,7 +28,7 @@ describe('User model', function() {
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
-        err.message.should.equal('Invalid password');
+        err.message.should.equal('Username or password not found');
         return done();
       }
     });
@@ -37,16 +37,18 @@ describe('User model', function() {
       function onAuth(err, user) {
         should.exist(err);
         should.not.exist(user);
-        err.message.should.equal('No such user');
+        err.message.should.equal('Username or password not found');
         return done();
       }
     });
     it('should accept a valid email/password', function(done) {
-      UserModel.authEmail({ email: 'test@dummy.com', password: 'bacon' }, onAuth);
+      UserModel.authEmail({ email: 'test@dummy.com', password: 'baconbits' }, onAuth);
       function onAuth(err, user) {
         should.not.exist(err);
         should.exist(user);
-        user.should.eql({ email: 'test@dummy.com' });
+        should.exist(user.email);
+        should.exist(user.password);
+        user.email.should.eql('test@dummy.com');
         return done();
       }
     });

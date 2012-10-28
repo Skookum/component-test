@@ -4,7 +4,13 @@ var assert = require('assert');
 
 var utils = require('./test.utils');
 
-utils.startApp(3002);
+var app = utils.startApp(3002);
+
+describe('Assumptions:', function() {
+  it('should have an empty users collection', function(done) {
+    app.users.model.remove(done);
+  });
+});
 
 describe('Browser', function() {
   describe('of an unregistered user', function() {
@@ -31,17 +37,33 @@ describe('Browser', function() {
         return done();
       });
     });
+    it('should not be able to create a user with a short password', function(done) {
+      browser.visit('http://localhost:3002/signup', function() {
+        browser
+          .fill('email', 'too@short.com')
+          .fill('password', 'bacon')
+          .pressButton('Create')
+          .then(function() {
+            assert.ok(browser.success);
+            browser.text('title').should.include('Sign in');
+            browser.text('.flash-messages').should.include('Sorry, we were unable to create that account');
+            return done();
+          });
+      });
+    });
     it('should be able to create a user', function(done) {
-      browser
-        .fill('email', 'test@dummy.com')
-        .fill('password', 'bacon')
-        .pressButton('create')
-        .then(function() {
-          assert.ok(browser.success);
-          browser.text('title').should.include('Dashboard');
-          browser.text('.flash-messages').should.include('Welcome');
-          return done();
-        });
+      browser.visit('http://localhost:3002/signup', function() {
+        browser
+          .fill('email', 'test@dummy.com')
+          .fill('password', 'baconbits')
+          .pressButton('Create')
+          .then(function() {
+            assert.ok(browser.success);
+            browser.text('title').should.include('Dashboard');
+            browser.text('.flash-messages').should.include('Welcome');
+            return done();
+          });
+      });
     });
   });
   describe('of a registered user', function() {
@@ -69,7 +91,7 @@ describe('Browser', function() {
     it('should be able to sign in with good credentials', function(done) {
       browser
         .fill('email', 'test@dummy.com')
-        .fill('password', 'bacon')
+        .fill('password', 'baconbits')
         .pressButton('Sign in')
         .then(function() {
           assert.ok(browser.success);

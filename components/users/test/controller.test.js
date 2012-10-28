@@ -4,9 +4,65 @@ var superagent = require('superagent');
 
 var utils = require('../../../shared/test/test.utils');
 
-utils.startApp(3000);
+var app = utils.startApp(3000);
+
+describe('Assumptions:', function() {
+  it('should have an empty users collection', function(done) {
+    app.users.model.remove(done);
+  });
+});
 
 describe('User controller', function() {
+  describe('/signup', function() {
+    describe('with insufficient data', function() {
+      it('should be rejected', function(done) {
+        var agent = superagent.agent();
+        agent
+          .post('http://localhost:3000/signup')
+          .send({ email: 'no@password.com' })
+          .end(onResponse);
+
+        function onResponse(err, res) {
+          res.should.have.status(200);
+          res.redirects.should.eql(['http://localhost:3000/']);
+          res.text.should.include('Sorry, we were unable to create that account');
+          return done();
+        }
+      });
+    });
+    describe('with a short password', function() {
+      it('should be rejected', function(done) {
+        var agent = superagent.agent();
+        agent
+          .post('http://localhost:3000/signup')
+          .send({ email: 'test@dummy.com', password: 'bacon' })
+          .end(onResponse);
+
+        function onResponse(err, res) {
+          res.should.have.status(200);
+          res.redirects.should.eql(['http://localhost:3000/']);
+          res.text.should.include('Sorry, we were unable to create that account');
+          return done();
+        }
+      });
+    });
+    describe('with good data', function() {
+      it('should create a new user', function(done) {
+        var agent = superagent.agent();
+        agent
+          .post('http://localhost:3000/signup')
+          .send({ email: 'test@dummy.com', password: 'baconbits' })
+          .end(onResponse);
+
+        function onResponse(err, res) {
+          res.should.have.status(200);
+          res.redirects.should.eql(['http://localhost:3000/', 'http://localhost:3000/dashboard']);
+          res.text.should.include('Welcome to this app');
+          return done();
+        }
+      });
+    });
+  });
   describe('/signin', function() {
     describe('with good credentials', function() {
       var agent = superagent.agent();
@@ -79,7 +135,7 @@ function loginUser(agent) {
   return function(done) {
     agent
       .post('http://localhost:3000/signin')
-      .send({ email: 'test@dummy.com', password: 'bacon' })
+      .send({ email: 'test@dummy.com', password: 'baconbits' })
       .end(onResponse);
 
     function onResponse(err, res) {

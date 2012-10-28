@@ -3,6 +3,6 @@ module.exports = {
     var config = process.env;
     var app = require('../../app')(config);
     var server = app.listen(port);
-    return server;
+    return app;
   }
 };

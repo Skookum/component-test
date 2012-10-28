@@ -8,7 +8,7 @@ module.exports = function(app, config) {
 
   // namespace
 
-  app.user = {
+  app.users = {
     loggedIn: isLoggedIn,
     model: UserModel
   };

@@ -31,7 +31,6 @@ module.exports = function(config) {
   // Setters
 
   function encrypt(plain) {
-    if (!plain || plain.length < MIN_PASSWORD_LENGTH) return undefined;
     var salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(plain, salt);
   }
@@ -41,9 +40,16 @@ module.exports = function(config) {
   function create(props, done) {
     var filter;
 
-    if (props.email && props.password) filter = { email: props.email };
+    // Standard email + password account
+    if (props.email && props.password) {
+      if (props.password.length < MIN_PASSWORD_LENGTH) return done(new Error('Password must be at least ' + MIN_PASSWORD_LENGTH + ' characters'));
+      filter = { email: props.email };
+    }
+    // Account linked to github
     else if (props.githubLogin) filter = { githubLogin: props.githubLogin };
-    else return done(new Error('Either email or github login is required'));
+    // Insufficient account data
+    else return done(new Error('Either email and password, or github login, is required'));
+    // See if this account already exists
     User.findOne(filter, onMatch);
 
     function onMatch(err, match) {
@@ -58,11 +64,11 @@ module.exports = function(config) {
     if (!(creds.email && creds.password)) {
       return done(new Error('Email and password required'));
     }
-    var encrypted = encrypt(creds.password);
     User.findOne({ email: creds.email }, onMatch);
 
     function onMatch(err, match) {
       if (err) return done(new Error("Database error"));
+      var encrypted = encrypt(creds.password);
       var passMatch = match && match.password && bcrypt.compareSync(creds.password, match.password);
       if (match && passMatch) return done(undefined, match);
       return done(new Error("Username or password not found"));
