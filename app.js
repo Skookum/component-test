@@ -15,12 +15,12 @@ var notFound = require('./components/notFound');
 
 // Expose the app
 
-module.exports = main;
+module.exports = createApp;
 
 // Decorate express with our components
 // Marry the app to its running configuration
 
-function main(config) {
+function createApp(config) {
   var app = express();
   app.locals.config = config;
 
@@ -38,7 +38,7 @@ function main(config) {
 
 if (module === require.main) {
   var config = process.env;
-  var app = main(config);
+  var app = createApp(config);
   app.listen(config.http_port);
   console.log("Listening on", config.http_port);
 }
