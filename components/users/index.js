@@ -39,7 +39,6 @@ module.exports = function(app, config) {
     UserModel.create(req.body, onCreate);
 
     function onCreate(err, newUser) {
-      console.log('err:', err);
       if (err) req.flash('Sorry, we were unable to create that account.');
       else {
         req.session.user = newUser;
@@ -50,7 +49,6 @@ module.exports = function(app, config) {
   }
 
   function githubOAuth(req, res, next) {
-    console.log('oauth returned from github');
     UserModel.authGitHub(req.param('code'), onAuth);
 
     function onAuth(err, user) {

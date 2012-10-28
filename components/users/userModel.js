@@ -54,7 +54,6 @@ module.exports = function(config) {
 
     function onMatch(err, match) {
       if (!err && match) return done(new Error('User already exists'));
-      console.log("Creating new user with props:", props);
       var newUser = new User(props);
       newUser.save(done);
     }
@@ -79,7 +78,6 @@ module.exports = function(config) {
     oauth.getOAuthAccessToken(code, {}, onToken);
 
     function onToken(err, token) {
-      console.log('onToken');
       if (err) return done(err);
       github.authenticate({
         type: 'oauth',
@@ -90,9 +88,7 @@ module.exports = function(config) {
     }
 
     function onInfo(err, info) {
-      console.log('onInfo');
       User.findOne({ githubLogin: info.login }, function(err, match) {
-        console.log('user match:', match);
         if (err) return done(new Error('Database error'));
         // User already exists in the db:
         // TODO: update from github to follow changes in name etc
@@ -107,7 +103,6 @@ module.exports = function(config) {
     }
 
     function onCreate(err, newUser) {
-      console.log('onCreate');
       if (err || !newUser) return done(new Error('Database error'));
       return done(undefined, newUser);
     }
