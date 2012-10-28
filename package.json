@@ -1,6 +1,6 @@
 {
   "name": "components",
-  "version": "0.0.3-3",
+  "version": "0.0.4",
   "author": "Hunter Loftis <hunter@hunterloftis.com>",
   "subdomain": "components",
   "engines": {
