@@ -4,7 +4,7 @@ setup:
 	npm install
 
 test:
-	source "config.test" && scripts/test
+	source "config.test" && scripts/test $(tests)
 
 start:
 	source "config.default" && npm start

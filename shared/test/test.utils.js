@@ -4,5 +4,10 @@ module.exports = {
     var app = require('../../app')(config);
     var server = app.listen(port);
     return app;
+  },
+  clearRequireCache: function() {
+    Object.keys(require.cache).forEach(function(key) {
+      delete require.cache[key];
+    });
   }
 };

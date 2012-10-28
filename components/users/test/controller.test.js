@@ -4,6 +4,8 @@ var superagent = require('superagent');
 
 var utils = require('../../../shared/test/test.utils');
 
+utils.clearRequireCache();
+
 var app = utils.startApp(3000);
 
 describe('Assumptions:', function() {

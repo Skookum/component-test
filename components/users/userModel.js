@@ -75,6 +75,7 @@ module.exports = function(config) {
   }
 
   function authGitHub(code, done) {
+    if (!code) return done(new Error('Code required for github authentication'));
     oauth.getOAuthAccessToken(code, {}, onToken);
 
     function onToken(err, token) {

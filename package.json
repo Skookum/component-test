@@ -15,7 +15,8 @@
     "github": "*",
     "oauth": "*",
     "mongoose": "*",
-    "bcrypt": "*"
+    "bcrypt": "*",
+    "mockery": "~1.2.0"
   },
   "devDependenciesDisabled": {
     "mocha": "*",
